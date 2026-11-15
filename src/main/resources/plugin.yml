@@ -1,0 +1,29 @@
+name: WorldManager
+version: 1.0.0
+main: dev.worldmanager.WorldManager
+api-version: '26.3'
+# STARTUP so the plugin is ready before the server creates its main world (needed for the void default dimensions).
+load: STARTUP
+softdepend: [Chunky]
+description: Create, delete, configure and travel between worlds.
+commands:
+  create:
+    description: Create worlds, set gamerules and default gamemodes.
+    usage: /create <world|gamerules|gamemode|biome|pre-gen> ...
+    permission: worldmanager.admin
+  delete:
+    description: Delete a world created by this plugin.
+    usage: /delete world <name>
+    permission: worldmanager.admin
+  world:
+    description: Teleport to a world.
+    usage: /world <name>
+    permission: worldmanager.use
+permissions:
+  # Everyone has these by default (no op needed). A permissions plugin can still take them away from groups.
+  worldmanager.admin:
+    description: Create/delete worlds and change their settings.
+    default: true
+  worldmanager.use:
+    description: Use /world.
+    default: true

@@ -1,0 +1,15 @@
+name: WorldManager
+version: 1.0.0
+main: dev.worldmanager.WorldManager
+# The bootstrapper registers the server links dialog + pause-menu button before the server finishes starting.
+bootstrapper: dev.worldmanager.WorldManagerBootstrap
+api-version: '26.3'
+# STARTUP so the plugin is ready before the server creates its main world (needed for the void default dimensions).
+load: STARTUP
+description: Create, delete, configure and travel between worlds.
+dependencies:
+  server:
+    Chunky:
+      load: OMIT
+      required: false
+      join-classpath: false

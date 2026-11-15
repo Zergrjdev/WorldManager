@@ -1,0 +1,70 @@
+# =====================================================================================
+# WorldManager - every setting lives in this file.
+# =====================================================================================
+
+# Server MOTD (the text under the server name in the multiplayer list).
+# Use \n for a second line. Section-sign (§) colour codes work.
+motd: "A minecraft server"
+
+# The server's three normal dimensions: the main world and its Nether and End
+# (world, world_nether, world_the_end - the main world's name comes from server.properties).
+# Each one can be:
+#   void      - an empty world with a small spawn platform (see "void" below)
+#   vanilla   - normal Minecraft generation
+#   a superflat preset - e.g.  minecraft:bedrock,2*minecraft:dirt,minecraft:grass_block;minecraft:plains
+#                        (layers go bottom to top, "2*" repeats a block, the biome after ";" is optional)
+# The server only reads this at startup, and it only affects chunks that don't exist yet.
+# For a completely fresh start: stop the server, delete the world folders, start it again.
+default-worlds:
+  overworld: void
+  nether: void
+  end: void
+  # The server picks the generator for its main worlds from bukkit.yml. With this on, the plugin
+  # adds the needed "generator:" lines there for you (it only fills in empty ones, and needs one
+  # restart after the first start). Turn it off if you manage bukkit.yml yourself.
+  configure-bukkit-yml: true
+
+# Void worlds (the default dimensions above, and /create world <name> void | void_nether | void_end).
+void:
+  # A 3x3 platform at 0,0 so players don't fall straight into the void on arrival.
+  spawn-platform: true
+  platform-block: minecraft:stone
+
+# World menu: a button on the pause (Esc) menu, like the "Donut SMP" button on DonutSMP. It opens dialog screens:
+#   My Worlds     - your worlds; click one for its settings screen (gamemode, biome, structures, gamerules,
+#                   pre-generate, teleport, delete)
+#   All Worlds    - every world; click one to teleport
+#   Create World  - make a new world without typing a command
+#   Last World    - back to the world you were in before this one
+# Needs a Minecraft 1.21.6+ client (older clients just ignore it).
+# This section is read when the server STARTS - restart the server after changing it.
+# Text uses MiniMessage: <red>, <bold>, <gradient:red:gold>text</gradient>, <#ff8800> ...
+menu:
+  enabled: true
+  # Text of the button on the pause menu (light blue -> dark purple-blue). Minecraft adds a "custom options are provided
+  # by servers" note to it - that is vanilla.
+  button-label: "<gradient:#8fd8ff:#4b2fb8><bold>World Manage</bold></gradient>"
+  title: "<gradient:#8fd8ff:#4b2fb8><bold>World Manage</bold></gradient>"   # title at the top of the main menu
+  columns: 2          # how many buttons per row in the main menu
+  button-width: 160   # width of the main menu buttons (1-1024)
+  exit-button-label: "Back to Game"
+  show-in-quick-actions: false   # also add the menu to the quick actions menu (G key)
+
+# true  = worlds from /create world are stored in plugins/WorldManager/worlds/<player uuid>/<name>
+# false = they are stored in the server folder like normal worlds
+store-worlds-in-plugin-folder: true
+
+# true = nobody in-game can run /stop, not even ops (the console, RCON and the host panel still can).
+block-stop-for-players: true
+
+# Silently cancel "tellraw" commands (console/RCON) that contain any of these words.
+block-host-ads: true
+blocked-keywords:
+  - minestrator
+
+# Managed automatically. Worlds created with /create world are stored here and re-loaded on startup.
+# Every player has their own worlds (two players can both have a world called "base"). Only the owner can change
+# or delete a world; the server console can change any world and give ownerless worlds to players with
+#   /create assign <world> <player>      (or "none" to remove the owner)
+# Worlds from before ownership existed have no "owner" line until the console assigns them.
+worlds: {}
